@@ -8,6 +8,8 @@
 
 How to use:
 
+Click on the link for the Superglide Practice Tool either above or here: https://github.com/AngryGroceries/Apex_Superglide_Practice_Tool/blob/main/Practice%20Tool
+
 Windows operating systems will already have "Windows Powershell" installed.
 
 Type "Windows Powershell" into the start menu
