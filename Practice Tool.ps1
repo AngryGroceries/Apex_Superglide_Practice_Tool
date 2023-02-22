@@ -68,7 +68,7 @@ while ($loop -eq "true") {
             $message = "Crouch slightly *sooner* by {0:n5} seconds" -f ($differenceSeconds * -1) + " to improve."
          } else {
             $message = "Crouched too late by " + ($elapsedFrames - 1).ToString("###") + " frames."
-            $chance = 1 - ($elapsedFrames/$elapsedFrames)
+            $chance = 0
          }
 
 	      ("{0:n3} frames have passed." -f $elapsedFrames.ToString()) | Write-Host
