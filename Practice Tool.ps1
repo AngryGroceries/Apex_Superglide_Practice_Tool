@@ -58,7 +58,7 @@ while ($loop -eq "true") {
          $secondtime = Get-Date
          $calculated = $secondtime - $currenttime
          $elapsedFrames = $calculated.TotalSeconds / $frametime
-	      $differenceSeconds = $frametime - $calculated.TotalSeconds
+         $differenceSeconds = $frametime - $calculated.TotalSeconds
 
          if($elapsedFrames -lt 1) {
             $chance = $elapsedFrames * 100
@@ -71,9 +71,9 @@ while ($loop -eq "true") {
             $chance = 0
          }
 
-	      ("{0:n3} frames have passed." -f $elapsedFrames.ToString()) | Write-Host
-	 
-         ( "{0:n4} % chance to hit." -f $chance.ToString() ) | Write-Host
+         ("{0:n3} frames have passed." -f $elapsedFrames.ToString()) | Write-Host
+         
+         ("{0:n4} % chance to hit." -f $chance.ToString()) | Write-Host
 
          $message | Write-Host
 
