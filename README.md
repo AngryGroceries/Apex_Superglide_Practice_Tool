@@ -1,8 +1,8 @@
 # Apex_Superglide_Practice_Tool
 
-# Authors 
-# JayTheYggdrasil @ https://github.com/JayTheYggdrasil
-# AngryGroceries  @ https://github.com/AngryGroceries 
+ Authors 
+ JayTheYggdrasil @ https://github.com/JayTheYggdrasil
+ AngryGroceries  @ https://github.com/AngryGroceries 
 
 How to use:
 
