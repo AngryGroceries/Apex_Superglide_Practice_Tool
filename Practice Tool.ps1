@@ -67,7 +67,7 @@ while ($loop -eq "true") {
       "Press Crouch..."
       $key = $Host.UI.RawUI.ReadKey()
 
-      if($key -eq $duckkey) {
+      if($key -eq $duckkey -And $jumpfirst -eq 1) {
          " (Crouch) Key Pressed"
 
          $secondtime = Get-Date
@@ -84,7 +84,7 @@ while ($loop -eq "true") {
             $message = "Crouch slightly *sooner* by {0:n5} seconds" -f ($differenceSeconds * -1) + " to improve."
             } 
             else {
-            $message = "Crouched too late by {0:n2} frames." -f ($elapsedFrames - 1)
+            $message = "Crouched too late by {0:n5} seconds" -f ($differenceSeconds * -1)
             $chance = 0
             }
 
