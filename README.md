@@ -12,7 +12,7 @@ Click on the link for the Superglide Practice Tool either above or here: https:/
 
 Windows operating systems will already have "Windows Powershell" installed.
 
-Type "Windows Powershell" into the start menu
+Type "Windows Powershell" into the Windows Start Menu
 Copy-paste the Superglide Practice Tool script directly from github into the powershell window. 
 Click 'Enter' to start the script. 
 
