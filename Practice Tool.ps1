@@ -67,7 +67,7 @@ while ($loop -eq "true") {
             $chance = ( (2 - $elapsedFrames) ) * 100
             $message = "Crouch slightly *sooner* by {0:n5} seconds" -f ($differenceSeconds * -1) + " to improve."
          } else {
-            $message = "Crouched too late by " + $elapsedFrames.ToString("###") + " frames."
+            $message = "Crouched too late by " + ($elapsedFrames - 1).ToString("###") + " frames."
             $chance = 1 - ($elapsedFrames/$elapsedFrames)
          }
 
