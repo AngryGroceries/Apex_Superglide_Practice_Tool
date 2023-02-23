@@ -66,11 +66,12 @@ while ($loop -eq "true") {
       $removespam = 0
       "Press Crouch..."
       $key = $Host.UI.RawUI.ReadKey()
-
+      $secondtime = Get-Date
+      
       if($key -eq $duckkey -And $jumpfirst -eq 1) {
          " (Crouch) Key Pressed"
 
-         $secondtime = Get-Date
+         
          $calculated = $secondtime - $currenttime
          $elapsedFrames = $calculated.TotalSeconds / $frametime
          $differenceSeconds = $frametime - $calculated.TotalSeconds
@@ -99,7 +100,7 @@ while ($loop -eq "true") {
          "--------------------------------------------------"
       }  
          else {
-		      $secondtime = Get-Date
+		      
          	$calculated = $secondtime - $currenttime
          	$elapsedFrames = $calculated.TotalSeconds / $frametime
 	 	      $differenceSeconds = $frametime + $calculated.TotalSeconds
