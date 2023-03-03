@@ -53,12 +53,14 @@ while ($loop -eq "true") {
          $cumlative = $cumlative + $chance
 
          if (!($attempt -eq 0)) {
+            " "
+            "--------------------------------------------------"
             $average = $cumlative / $attempt
-            "###### Attempt {1} - Average: {0:n2}% ######" -f $attempt, $average
+            "###### Attempt {0:n0} - Average: {1:n2}% ######" -f $attempt, $average
             Write-Host -ForegroundColor DarkGray "Awaiting Jump..."
          } else {
             "###### Attempt 0 - Average: NA ######"
-            "Awaiting Jump..."
+            Write-Host -ForegroundColor DarkGray "Awaiting Jump..."
          }
 
          $attempt = $attempt + 1      
@@ -73,7 +75,7 @@ while ($loop -eq "true") {
    # State Transitions
    if ($key -eq $duckkey) {
       if($state -eq [states]::Ready) {
-         # Crouched First.
+         # Crouched First
          Write-Host -ForegroundColor Yellow " Key Pressed (Crouch)"
          $startTime = Get-Date
          $state = [states]::Crouch
@@ -106,11 +108,11 @@ while ($loop -eq "true") {
          
          if($chance -gt 0) {
             ("{0:n1}% chance to hit." -f $chance.ToString()) | Write-Host -ForegroundColor Green
-            $message | Write-Host -ForegroundColor Yellow
          } else {
             "0% chance to hit." | Write-Host -ForegroundColor Red
-            $message | Write-Host -ForegroundColor Yellow
          }
+
+         $message | Write-Host -ForegroundColor Yellow
 
          $state = [states]::Ready
       } elseif ($state -eq [states]::Crouch) {
@@ -137,22 +139,21 @@ while ($loop -eq "true") {
          Write-Host -ForegroundColor DarkGray " Key Pressed (Jump) - Ignored"
          $state = [states]::JumpWarned
       } elseif ($state -eq [states]::Crouch) {
-         Write-Host -ForegroundColor Red "0% chance to hit, wrong input order"
+         Write-Host -ForegroundColor Yellow " Key Pressed (Jump)"
+         Write-Host -ForegroundColor Red "0% chance to hit"
+         Write-Host -ForegroundColor Red "- You must jump before you crouch"
          # Difference in time between inputs + 1 frameTime for the offset.
          $now = Get-Date
-         $delta = ($now - $startTime).TotalSeconds + $frameTime
-         $earlyBy = $delta.TotalSeconds / $frameTime
+         $delta = ($now - $starTtime).TotalSeconds + $frameTime
+         $earlyBy = $delta / $frameTime
 
          $chance = 0
 
-         ("Press crouch later by {0:n2} frames ({0:n2}s)" -f $earlyBy, $delta) | Write-Host -ForegroundColor Yellow
+         ("Press crouch later by {0:n2} frames ({1:n5}s)" -f $earlyBy, $delta) | Write-Host -ForegroundColor Yellow
          $state = [states]::Ready
       }
    } else {
       Write-Host -ForegroundColor DarkGray " Key Pressed (and Ignored)"
    }
 
-   
-	# Start-Sleep -Milliseconds 125
-	$HOST.UI.RawUI.Flushinputbuffer()
 }
