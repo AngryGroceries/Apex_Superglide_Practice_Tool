@@ -55,6 +55,11 @@ while ($loop -eq "true") {
          if (!($attempt -eq 0)) {
             " "
             "--------------------------------------------------"
+            
+            # Small delay so previous attempt doesn't effect this attempt.
+            Start-Sleep -Milliseconds 125
+	         $HOST.UI.RawUI.Flushinputbuffer()
+
             $average = $cumlative / $attempt
             "###### Attempt {0:n0} - Average: {1:n2}% ######" -f $attempt, $average
             Write-Host -ForegroundColor DarkGray "Awaiting Jump..."
