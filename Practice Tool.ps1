@@ -251,7 +251,7 @@ while ($loop -eq "true") {
       
       "--------------------------------------------------"
       write-host "Summary Screen" -ForegroundColor Yellow
-
+      $attempt = $attempt - 1
       #iterator 
       ""
       "Count by Percentile"
@@ -267,14 +267,19 @@ while ($loop -eq "true") {
 
       ""
       "Stats"
-      Write-Host -nonewline -ForegroundColor DarkGray "Average:   "
+      Write-Host -nonewline -ForegroundColor DarkGray "Average:------- "
       "{0:n2}%" -f $average
-      Write-Host -nonewline -ForegroundColor DarkGray "Attempts:  "
+      Write-Host -nonewline -ForegroundColor DarkGray "Attempts:------ "
       Write-Host $attempt
-      Write-Host -nonewline -ForegroundColor DarkGray "Missed:    " 
+      Write-Host -nonewline -ForegroundColor DarkGray "Missed:-------- " 
       Write-Host -ForegroundColor Red $FailCount
-      Write-Host -nonewline -ForegroundColor DarkGray "Successes: " 
+      Write-Host -nonewline -ForegroundColor DarkGray "In Range:------ " 
       Write-Host -ForegroundColor Green $SuccessCount
+
+      #Write-Host -nonewline -ForegroundColor DarkGray "Wrong Order:--- " 
+      #Write-Host -ForegroundColor DarkGray $WrongOrderCount
+      #Write-Host -nonewline -ForegroundColor DarkGray "Wrong Button:-- " 
+      #Write-Host -ForegroundColor DarkGray $WrongButtonCount
 
    }
    
