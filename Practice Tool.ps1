@@ -3,8 +3,10 @@
 # AngryGroceries  @ https://github.com/AngryGroceries 
 
 $loop = "true"
-$startTime = Get-Date
-$secondtime = Get-Date
+# $startTime = Get-Date
+# $secondtime = Get-Date
+
+$stopwatch = New-Object System.Diagnostics.Stopwatch
 
 enum states {
    Ready      # Initial State
@@ -82,14 +84,14 @@ while ($loop -eq "true") {
       if($state -eq [states]::Ready) {
          # Crouched First
          Write-Host -ForegroundColor Yellow " Key Pressed (Crouch)"
-         $startTime = Get-Date
+         $stopwatch.Restart()
          $state = [states]::Crouch
       } elseif(($state -eq [states]::Jump) -or ($state -eq [states]::JumpWarned)) {
          # Happy Path
+         $stopwatch.Stop()
+
          Write-Host -ForegroundColor Green " Key Pressed (Crouch)"
-         
-         $now = Get-Date
-         $calculated = $now - $startTime
+         $calculated = $stopwatch.Elapsed
          $elapsedFrames = $calculated.TotalSeconds / $frameTime
          $differenceSeconds = $frameTime - $calculated.TotalSeconds
 
@@ -107,9 +109,6 @@ while ($loop -eq "true") {
          }
 
          ("{0:n1} frames have passed." -f $elapsedFrames.ToString()) | Write-Host
-         
-         
-         
          
          if($chance -gt 0) {
             ("{0:n1}% chance to hit." -f $chance.ToString()) | Write-Host -ForegroundColor Green
@@ -132,8 +131,22 @@ while ($loop -eq "true") {
       if($state -eq [states]::Ready) {
          # Happy Path
          Write-Host -ForegroundColor Green " Key Pressed (Jump)"
-         $startTime = Get-Date
+         $stopwatch.Restart()
          $state = [states]::Jump
+      } elseif ($state -eq [states]::Crouch) {
+         $stopwatch.Stop()
+
+         Write-Host -ForegroundColor Yellow " Key Pressed (Jump)"
+         Write-Host -ForegroundColor Red "0% chance to hit"
+         Write-Host -ForegroundColor Red "- You must jump before you crouch"
+         # Difference in time between inputs + 1 frameTime for the offset.
+         $delta = $stopwatch.Elapsed.TotalSeconds + $frameTime
+         $earlyBy = $delta / $frameTime
+
+         $chance = 0
+
+         ("Press crouch later by {0:n2} frames ({1:n5}s)" -f $earlyBy, $delta) | Write-Host -ForegroundColor Yellow
+         $state = [states]::Ready
       } elseif($state -eq [states]::Jump) {
          # Multi Jump Input.
          Write-Host -ForegroundColor DarkGray " Key Pressed (Jump) - Ignored"
@@ -143,19 +156,6 @@ while ($loop -eq "true") {
          # Multi Jump input, already warned.
          Write-Host -ForegroundColor DarkGray " Key Pressed (Jump) - Ignored"
          $state = [states]::JumpWarned
-      } elseif ($state -eq [states]::Crouch) {
-         Write-Host -ForegroundColor Yellow " Key Pressed (Jump)"
-         Write-Host -ForegroundColor Red "0% chance to hit"
-         Write-Host -ForegroundColor Red "- You must jump before you crouch"
-         # Difference in time between inputs + 1 frameTime for the offset.
-         $now = Get-Date
-         $delta = ($now - $starTtime).TotalSeconds + $frameTime
-         $earlyBy = $delta / $frameTime
-
-         $chance = 0
-
-         ("Press crouch later by {0:n2} frames ({1:n5}s)" -f $earlyBy, $delta) | Write-Host -ForegroundColor Yellow
-         $state = [states]::Ready
       }
    } else {
       Write-Host -ForegroundColor DarkGray " Key Pressed (and Ignored)"
